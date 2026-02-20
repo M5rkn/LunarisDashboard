@@ -11,6 +11,5 @@ dist
 *.log
 railway.json
 Dockerfile
-nginx.conf
 DEPLOY.md
 README_RAILWAY.md
