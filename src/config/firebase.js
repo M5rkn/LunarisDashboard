@@ -1,5 +1,4 @@
 // Конфигурация Firebase
-// Замените эти значения на ваши данные из Firebase Console
 import { initializeApp } from 'firebase/app'
 import { getFirestore } from 'firebase/firestore'
 import { getAnalytics } from 'firebase/analytics'
@@ -19,24 +18,6 @@ const app = initializeApp(firebaseConfig)
 
 // Экспорт сервисов
 export const db = getFirestore(app)
-
-// Инициализация analytics с защитой от ошибок
-let analyticsInstance = null
-try {
-  if (typeof window !== 'undefined') {
-    analyticsInstance = getAnalytics(app)
-  }
-} catch (e) {
-  console.warn('Analytics не доступен:', e)
-}
-export const analytics = analyticsInstance
-
-// Проверка инициализации
-console.log('Firebase инициализирован:', {
-  app,
-  db,
-  analytics: analyticsInstance,
-  projectId: firebaseConfig.projectId
-})
+export const analytics = typeof window !== 'undefined' ? getAnalytics(app) : null
 
 export default app
