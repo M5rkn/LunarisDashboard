@@ -15,6 +15,9 @@ COPY . .
 # Build the app
 RUN npm run build
 
+# List built files
+RUN ls -la dist/
+
 # Stage 2: Serve
 FROM nginx:alpine
 
@@ -23,6 +26,9 @@ COPY --from=build /app/dist /usr/share/nginx/html
 
 # Copy nginx config
 COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# List files in nginx
+RUN ls -la /usr/share/nginx/html/
 
 # Expose port
 EXPOSE 80
