@@ -416,6 +416,9 @@ ${store.metrics.map(m => `${m.name}: ${m.value}`).join('\n')}
   align-items: center;
   flex-wrap: wrap;
   gap: 16px;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  padding-right: 8px;
 }
 
 .page-title {
@@ -663,6 +666,7 @@ ${store.metrics.map(m => `${m.name}: ${m.value}`).join('\n')}
   padding: 24px;
   min-width: 0;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-x: hidden;
 }
 
 .table-card:hover {
@@ -672,6 +676,9 @@ ${store.metrics.map(m => `${m.name}: ${m.value}`).join('\n')}
 
 .modern-table {
   background: transparent;
+  width: 100%;
+  display: table;
+  overflow-x: hidden;
 }
 
 .modern-table :deep(th) {
@@ -692,6 +699,7 @@ ${store.metrics.map(m => `${m.name}: ${m.value}`).join('\n')}
   padding: 16px;
   font-size: 0.9rem;
   transition: all 0.2s;
+  vertical-align: middle;
 }
 
 .table-row {
@@ -700,7 +708,6 @@ ${store.metrics.map(m => `${m.name}: ${m.value}`).join('\n')}
 
 .table-row:hover {
   background: rgba(102, 126, 234, 0.08);
-  transform: scale(1.01);
 }
 
 .order-id {
@@ -712,6 +719,7 @@ ${store.metrics.map(m => `${m.name}: ${m.value}`).join('\n')}
   display: flex;
   align-items: center;
   gap: 12px;
+  min-height: 32px;
 }
 
 .customer-name {
@@ -814,16 +822,22 @@ ${store.metrics.map(m => `${m.name}: ${m.value}`).join('\n')}
 
   .modern-table :deep(th),
   .modern-table :deep(td) {
-    padding: 12px 8px;
+    padding: 16px 8px;
+    vertical-align: middle;
   }
 
   .customer-cell {
-    flex-direction: column;
-    gap: 4px;
+    gap: 12px;
+    align-items: center;
   }
 
   .status-chip {
     font-size: 0.75rem;
+    justify-content: center;
+  }
+
+  .status-dot {
+    margin-right: 4px;
   }
 }
 </style>

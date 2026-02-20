@@ -162,6 +162,7 @@ const menuItems = [
 .dashboard-app {
   background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 .nav-drawer {
@@ -435,6 +436,7 @@ const menuItems = [
   background: transparent;
   transition: none !important;
   padding-top: 70px;
+  overflow-x: hidden;
 }
 
 @media (min-width: 961px) {
@@ -464,10 +466,11 @@ const menuItems = [
 }
 
 .v-container {
-  max-width: 1200px !important;
+  max-width: 100% !important;
   padding: 24px 32px !important;
   width: 100%;
   margin: 0 auto;
+  box-sizing: border-box;
 }
 
 @media (max-width: 960px) {
@@ -480,7 +483,7 @@ const menuItems = [
   .v-container {
     padding: 12px 16px !important;
   }
-  
+
   .main-content {
     margin-left: 0 !important;
   }
