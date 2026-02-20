@@ -12,11 +12,12 @@ RUN npm ci
 # Copy source files
 COPY . .
 
-# Build the app
-RUN npm run build
+# Build the app with verbose output
+RUN npm run build 2>&1 | tee build.log
 
-# List built files
-RUN ls -la dist/
+# Show build output
+RUN echo "=== BUILD LOG ===" && cat build.log || true
+RUN echo "=== DIST FILES ===" && ls -la dist/ || true
 
 # Stage 2: Serve
 FROM nginx:alpine
@@ -27,8 +28,8 @@ COPY --from=build /app/dist /usr/share/nginx/html
 # Copy nginx config
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# List files in nginx
-RUN ls -la /usr/share/nginx/html/
+# Show deployed files
+RUN echo "=== DEPLOYED FILES ===" && ls -la /usr/share/nginx/html/ || true
 
 # Expose port
 EXPOSE 80
