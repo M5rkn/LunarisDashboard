@@ -9,15 +9,18 @@ COPY package*.json ./
 # Install dependencies
 RUN npm ci
 
-# Copy source files
+# Copy source files (exclude node_modules, dist)
 COPY . .
 
-# Build the app with verbose output
-RUN npm run build 2>&1 | tee build.log
+# Verify source files exist
+RUN echo "=== SOURCE FILES ===" && ls -la src/ || true
+RUN echo "=== MAIN.JS CHECK ===" && test -f src/main.js && echo "main.js EXISTS" || echo "main.js MISSING"
 
-# Show build output
-RUN echo "=== BUILD LOG ===" && cat build.log || true
-RUN echo "=== DIST FILES ===" && ls -la dist/ || true
+# Build the app
+RUN npm run build
+
+# Verify build output
+RUN echo "=== DIST FILES AFTER BUILD ===" && ls -la dist/ || true
 
 # Stage 2: Serve
 FROM nginx:alpine
@@ -28,7 +31,7 @@ COPY --from=build /app/dist /usr/share/nginx/html
 # Copy nginx config
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Show deployed files
+# Verify deployment
 RUN echo "=== DEPLOYED FILES ===" && ls -la /usr/share/nginx/html/ || true
 
 # Expose port

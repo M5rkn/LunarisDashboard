@@ -1,0 +1,16 @@
+node_modules
+dist
+.git
+.gitignore
+*.md
+.env
+.env.local
+.qwen
+.vscode
+.idea
+*.log
+railway.json
+Dockerfile
+nginx.conf
+DEPLOY.md
+README_RAILWAY.md
