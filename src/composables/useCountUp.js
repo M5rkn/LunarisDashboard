@@ -13,7 +13,7 @@ export function useCountUp(endValue, duration = 2000, startOnMount = true) {
     const elapsed = timestamp - startTime.value
     const progress = Math.min(elapsed / duration, 1)
 
-    // Easing function (ease-out-circ)
+    
     const easeOut = 1 - Math.pow(1 - progress, 3)
 
     currentValue.value = Math.floor(easeOut * endValue)
