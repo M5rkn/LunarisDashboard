@@ -159,8 +159,6 @@ html,
 body {
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
-  overflow-y: auto;
   height: 100%;
 }
 
@@ -171,7 +169,6 @@ body {
 .dashboard-app {
   background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
   min-height: 100vh;
-  overflow-x: hidden;
 }
 
 .nav-drawer {
@@ -281,17 +278,6 @@ body {
   border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
   overflow-y: auto !important;
   overflow-x: hidden !important;
-}
-
-/* Скрываем скроллбар навигации */
-.nav-drawer::-webkit-scrollbar {
-  width: 0 !important;
-  background: transparent !important;
-}
-
-.nav-drawer {
-  scrollbar-width: none !important;
-  -ms-overflow-style: none !important;
 }
 
 /* ПК версия */
@@ -458,7 +444,6 @@ body {
   background: transparent;
   transition: none !important;
   padding-top: 70px;
-  overflow-x: hidden;
 }
 
 @media (min-width: 961px) {
@@ -504,10 +489,13 @@ body {
 @media (max-width: 600px) {
   .v-container {
     padding: 12px 16px !important;
+    width: 100%;
   }
 
   .main-content {
     margin-left: 0 !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
   }
 }
 

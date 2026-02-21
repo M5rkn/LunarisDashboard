@@ -386,26 +386,12 @@ ${store.metrics.map(m => `${m.name}: ${m.value}`).join('\n')}
 <style scoped>
 .dashboard {
   padding: 0;
-  overflow-x: hidden;
-  touch-action: pan-y !important;
 }
 
-/* Скрываем скроллбар для dashboard */
-.dashboard::-webkit-scrollbar {
-  display: none;
-}
-
-.dashboard {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-/* Разрешаем вертикальную прокрутку на всех карточках */
-.metric-card,
-.chart-card,
-.table-card {
-  touch-action: pan-y !important;
-  -webkit-overflow-scrolling: touch !important;
+@media (max-width: 600px) {
+  .dashboard {
+    padding: 0 8px;
+  }
 }
 
 /* Анимации при скролле */
@@ -488,11 +474,12 @@ ${store.metrics.map(m => `${m.name}: ${m.value}`).join('\n')}
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 20px;
-  overflow: visible;
+  overflow: hidden;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   height: 100%;
   min-width: 0;
   position: relative;
+  will-change: transform;
 }
 
 .metric-card::before {
@@ -512,7 +499,7 @@ ${store.metrics.map(m => `${m.name}: ${m.value}`).join('\n')}
 }
 
 .metric-card:hover {
-  transform: translateY(-8px);
+  transform: translateY(-8px) !important;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 40px rgba(102, 126, 234, 0.3);
   border-color: rgba(102, 126, 234, 0.3);
 }
@@ -589,7 +576,8 @@ ${store.metrics.map(m => `${m.name}: ${m.value}`).join('\n')}
   min-width: 0;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
-  overflow: visible;
+  overflow: hidden;
+  will-change: transform;
 }
 
 .chart-card::after {
@@ -720,7 +708,8 @@ ${store.metrics.map(m => `${m.name}: ${m.value}`).join('\n')}
   padding: 24px;
   min-width: 0;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  overflow: visible;
+  overflow: hidden;
+  will-change: transform;
 }
 
 .table-card:hover {
@@ -737,35 +726,8 @@ ${store.metrics.map(m => `${m.name}: ${m.value}`).join('\n')}
 
 .table-wrapper {
   overflow-x: auto;
-  overflow-y: visible;
+  overflow-y: hidden;
   border-radius: 12px;
-  touch-action: pan-x pan-y !important;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* На мобильных разрешаем только горизонтальный скролл внутри таблицы */
-@media (max-width: 960px) {
-  .table-wrapper {
-    touch-action: pan-x !important;
-  }
-}
-
-.table-wrapper::-webkit-scrollbar {
-  height: 6px;
-}
-
-.table-wrapper::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 3px;
-}
-
-.table-wrapper::-webkit-scrollbar-thumb {
-  background: rgba(102, 126, 234, 0.5);
-  border-radius: 3px;
-}
-
-.table-wrapper::-webkit-scrollbar-thumb:hover {
-  background: rgba(102, 126, 234, 0.7);
 }
 
 .modern-table :deep(th) {
@@ -891,7 +853,6 @@ ${store.metrics.map(m => `${m.name}: ${m.value}`).join('\n')}
   .table-card {
     padding: 16px;
     margin: 0;
-    touch-action: pan-y !important;
   }
 
   .card-header {
@@ -907,7 +868,6 @@ ${store.metrics.map(m => `${m.name}: ${m.value}`).join('\n')}
   .table-wrapper {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-    touch-action: pan-x pan-y !important;
   }
 
   .modern-table {

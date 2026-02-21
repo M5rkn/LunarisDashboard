@@ -1,84 +1,46 @@
-/* Глобальные стили для предотвращения второго скролла */
+/* Глобальные стили для прокрутки */
 html {
   overflow-x: hidden;
-  overflow-y: auto !important;
+  overflow-y: auto;
+  height: 100%;
 }
 
 body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-  overflow-y: auto !important;
-}
-
-#app {
-  overflow-x: hidden;
-  overflow-y: auto !important;
+  overflow-y: auto;
   height: 100%;
 }
 
-/* Скрываем полосу прокрутки для всех элементов */
-html::-webkit-scrollbar,
-body::-webkit-scrollbar,
-#app::-webkit-scrollbar,
-.v-app::-webkit-scrollbar {
-  width: 0 !important;
-  background: transparent !important;
-  display: none !important;
-}
-
-html,
-body,
+#app,
 .v-app {
-  scrollbar-width: none !important; /* Firefox */
-  -ms-overflow-style: none !important; /* IE/Edge */
-}
-
-/* Убираем второй скролл на всех элементах */
-.v-app,
-.v-main,
-.v-main__wrap {
-  overflow-x: hidden !important;
-  overflow-y: visible !important;
-  height: auto !important;
-}
-
-/* Отключаем скролл на v-main */
-.v-main {
   overflow: visible !important;
 }
 
-/* Фикс для контейнера */
-.v-container {
-  max-width: 100% !important;
-  overflow-x: hidden;
+/* Убираем скроллбар с #app и .v-app */
+#app::-webkit-scrollbar,
+.v-app::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
-/* Принудительная прокрутка только на html/body */
-html {
-  overscroll-behavior-y: none;
-  -webkit-overflow-scrolling: touch;
+#app,
+.v-app {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
 }
 
-body {
-  overscroll-behavior-y: none;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* Разрешаем вертикальную прокрутку на всех элементах */
+/* Убираем второй скролл на всех элементах */
 .v-main,
+.v-main__wrap,
 .dashboard,
-.metric-card,
-.chart-card,
-.table-card,
 .v-container {
-  touch-action: pan-y !important;
-  -webkit-overflow-scrolling: touch !important;
+  overflow: visible !important;
 }
 
-/* Отключаем блокировку скролла на карточках */
-.metric-card,
-.chart-card,
-.table-card {
-  pointer-events: auto !important;
+html,
+body {
+  -webkit-overflow-scrolling: touch;
 }
