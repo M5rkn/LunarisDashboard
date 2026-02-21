@@ -155,6 +155,15 @@ const menuItems = [
 </script>
 
 <style>
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 100%;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -270,6 +279,19 @@ const menuItems = [
   background: rgba(255, 255, 255, 0.05) !important;
   backdrop-filter: blur(20px);
   border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+/* Скрываем скроллбар навигации */
+.nav-drawer::-webkit-scrollbar {
+  width: 0 !important;
+  background: transparent !important;
+}
+
+.nav-drawer {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
 }
 
 /* ПК версия */

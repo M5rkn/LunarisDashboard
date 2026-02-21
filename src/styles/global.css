@@ -1,0 +1,84 @@
+/* Глобальные стили для предотвращения второго скролла */
+html {
+  overflow-x: hidden;
+  overflow-y: auto !important;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto !important;
+}
+
+#app {
+  overflow-x: hidden;
+  overflow-y: auto !important;
+  height: 100%;
+}
+
+/* Скрываем полосу прокрутки для всех элементов */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+#app::-webkit-scrollbar,
+.v-app::-webkit-scrollbar {
+  width: 0 !important;
+  background: transparent !important;
+  display: none !important;
+}
+
+html,
+body,
+.v-app {
+  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important; /* IE/Edge */
+}
+
+/* Убираем второй скролл на всех элементах */
+.v-app,
+.v-main,
+.v-main__wrap {
+  overflow-x: hidden !important;
+  overflow-y: visible !important;
+  height: auto !important;
+}
+
+/* Отключаем скролл на v-main */
+.v-main {
+  overflow: visible !important;
+}
+
+/* Фикс для контейнера */
+.v-container {
+  max-width: 100% !important;
+  overflow-x: hidden;
+}
+
+/* Принудительная прокрутка только на html/body */
+html {
+  overscroll-behavior-y: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+body {
+  overscroll-behavior-y: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Разрешаем вертикальную прокрутку на всех элементах */
+.v-main,
+.dashboard,
+.metric-card,
+.chart-card,
+.table-card,
+.v-container {
+  touch-action: pan-y !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+
+/* Отключаем блокировку скролла на карточках */
+.metric-card,
+.chart-card,
+.table-card {
+  pointer-events: auto !important;
+}

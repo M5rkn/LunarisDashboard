@@ -90,50 +90,52 @@
               Экспорт
             </v-btn>
           </div>
-          <v-table class="modern-table" density="comfortable">
-            <thead>
-              <tr>
-                <th class="text-left">ID заказа</th>
-                <th class="text-left">Клиент</th>
-                <th class="text-left">Сумма</th>
-                <th class="text-left">Дата</th>
-                <th class="text-left">Статус</th>
-                <th class="text-right">Действия</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="order in orders" :key="order.id" class="table-row">
-                <td>
-                  <span class="order-id">{{ order.id }}</span>
-                </td>
-                <td>
-                  <div class="customer-cell">
-                    <v-avatar size="32" :color="getAvatarColor(order.customer)">
-                      {{ getInitials(order.customer) }}
-                    </v-avatar>
-                    <span class="customer-name">{{ order.customer }}</span>
-                  </div>
-                </td>
-                <td>
-                  <span class="amount">{{ order.amount }}</span>
-                </td>
-                <td>
-                  <span class="date">{{ order.date }}</span>
-                </td>
-                <td>
-                  <v-chip :color="getStatusColor(order.status)" size="small" class="status-chip">
-                    <span class="status-dot" :style="{ background: getStatusDotColor(order.status) }"></span>
-                    {{ order.status }}
-                  </v-chip>
-                </td>
-                <td class="text-right">
-                  <v-btn icon size="small" variant="text">
-                    <v-icon size="18">mdi-dots-horizontal</v-icon>
-                  </v-btn>
-                </td>
-              </tr>
-            </tbody>
-          </v-table>
+          <div class="table-wrapper">
+            <v-table class="modern-table" density="comfortable">
+              <thead>
+                <tr>
+                  <th class="text-left">ID заказа</th>
+                  <th class="text-left">Клиент</th>
+                  <th class="text-left">Сумма</th>
+                  <th class="text-left">Дата</th>
+                  <th class="text-left">Статус</th>
+                  <th class="text-right">Действия</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="order in orders" :key="order.id" class="table-row">
+                  <td>
+                    <span class="order-id">{{ order.id }}</span>
+                  </td>
+                  <td>
+                    <div class="customer-cell">
+                      <v-avatar size="32" :color="getAvatarColor(order.customer)">
+                        {{ getInitials(order.customer) }}
+                      </v-avatar>
+                      <span class="customer-name">{{ order.customer }}</span>
+                    </div>
+                  </td>
+                  <td>
+                    <span class="amount">{{ order.amount }}</span>
+                  </td>
+                  <td>
+                    <span class="date">{{ order.date }}</span>
+                  </td>
+                  <td>
+                    <v-chip :color="getStatusColor(order.status)" size="small" class="status-chip">
+                      <span class="status-dot" :style="{ background: getStatusDotColor(order.status) }"></span>
+                      {{ order.status }}
+                    </v-chip>
+                  </td>
+                  <td class="text-right">
+                    <v-btn icon size="small" variant="text">
+                      <v-icon size="18">mdi-dots-horizontal</v-icon>
+                    </v-btn>
+                  </td>
+                </tr>
+              </tbody>
+            </v-table>
+          </div>
         </v-card>
       </v-col>
     </v-row>
@@ -233,6 +235,7 @@ const chartOptions = {
       display: false
     },
     tooltip: {
+      enabled: false,
       backgroundColor: 'rgba(15, 12, 41, 0.9)',
       titleColor: '#fff',
       bodyColor: '#fff',
@@ -261,7 +264,11 @@ const chartOptions = {
       },
       beginAtZero: true
     }
-  }
+  },
+  interaction: {
+    mode: 'none'
+  },
+  events: []
 }
 
 const doughnutOptions = {
@@ -273,6 +280,7 @@ const doughnutOptions = {
       display: false
     },
     tooltip: {
+      enabled: false,
       backgroundColor: 'rgba(15, 12, 41, 0.9)',
       titleColor: '#fff',
       bodyColor: '#fff',
@@ -280,7 +288,11 @@ const doughnutOptions = {
       cornerRadius: 12,
       displayColors: false
     }
-  }
+  },
+  interaction: {
+    mode: 'none'
+  },
+  events: []
 }
 
 // Заголовки таблицы
@@ -374,6 +386,26 @@ ${store.metrics.map(m => `${m.name}: ${m.value}`).join('\n')}
 <style scoped>
 .dashboard {
   padding: 0;
+  overflow-x: hidden;
+  touch-action: pan-y !important;
+}
+
+/* Скрываем скроллбар для dashboard */
+.dashboard::-webkit-scrollbar {
+  display: none;
+}
+
+.dashboard {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+/* Разрешаем вертикальную прокрутку на всех карточках */
+.metric-card,
+.chart-card,
+.table-card {
+  touch-action: pan-y !important;
+  -webkit-overflow-scrolling: touch !important;
 }
 
 /* Анимации при скролле */
@@ -456,7 +488,7 @@ ${store.metrics.map(m => `${m.name}: ${m.value}`).join('\n')}
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 20px;
-  overflow: hidden;
+  overflow: visible;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   height: 100%;
   min-width: 0;
@@ -471,6 +503,12 @@ ${store.metrics.map(m => `${m.name}: ${m.value}`).join('\n')}
   opacity: 0;
   transition: opacity 0.4s;
   pointer-events: none;
+  z-index: 0;
+}
+
+.metric-card-inner {
+  position: relative;
+  z-index: 1;
 }
 
 .metric-card:hover {
@@ -551,7 +589,7 @@ ${store.metrics.map(m => `${m.name}: ${m.value}`).join('\n')}
   min-width: 0;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .chart-card::after {
@@ -569,6 +607,14 @@ ${store.metrics.map(m => `${m.name}: ${m.value}`).join('\n')}
   );
   transition: left 0.6s;
   pointer-events: none;
+  z-index: 0;
+}
+
+.chart-card .card-header,
+.chart-card .chart-wrapper,
+.chart-card .legend-custom {
+  position: relative;
+  z-index: 1;
 }
 
 .chart-card:hover {
@@ -620,8 +666,16 @@ ${store.metrics.map(m => `${m.name}: ${m.value}`).join('\n')}
   position: relative;
 }
 
+.chart-wrapper canvas {
+  pointer-events: none !important;
+}
+
 .doughnut-wrapper {
   height: 200px;
+}
+
+.doughnut-wrapper canvas {
+  pointer-events: none !important;
 }
 
 /* Кастомная легенда */
@@ -666,7 +720,7 @@ ${store.metrics.map(m => `${m.name}: ${m.value}`).join('\n')}
   padding: 24px;
   min-width: 0;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  overflow-x: hidden;
+  overflow: visible;
 }
 
 .table-card:hover {
@@ -678,7 +732,40 @@ ${store.metrics.map(m => `${m.name}: ${m.value}`).join('\n')}
   background: transparent;
   width: 100%;
   display: table;
-  overflow-x: hidden;
+  min-width: 600px;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  overflow-y: visible;
+  border-radius: 12px;
+  touch-action: pan-x pan-y !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* На мобильных разрешаем только горизонтальный скролл внутри таблицы */
+@media (max-width: 960px) {
+  .table-wrapper {
+    touch-action: pan-x !important;
+  }
+}
+
+.table-wrapper::-webkit-scrollbar {
+  height: 6px;
+}
+
+.table-wrapper::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
+  background: rgba(102, 126, 234, 0.5);
+  border-radius: 3px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb:hover {
+  background: rgba(102, 126, 234, 0.7);
 }
 
 .modern-table :deep(th) {
@@ -804,6 +891,7 @@ ${store.metrics.map(m => `${m.name}: ${m.value}`).join('\n')}
   .table-card {
     padding: 16px;
     margin: 0;
+    touch-action: pan-y !important;
   }
 
   .card-header {
@@ -816,8 +904,15 @@ ${store.metrics.map(m => `${m.name}: ${m.value}`).join('\n')}
     font-size: 1rem;
   }
 
+  .table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x pan-y !important;
+  }
+
   .modern-table {
     font-size: 0.85rem;
+    min-width: 500px;
   }
 
   .modern-table :deep(th),
