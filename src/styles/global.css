@@ -1,46 +1,50 @@
 /* Глобальные стили для прокрутки */
 html {
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: auto !important;
   height: 100%;
+  scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
   padding: 0;
+  min-height: 100%;
   overflow-x: hidden;
-  overflow-y: auto;
-  height: 100%;
 }
 
-#app,
+#app {
+  height: 100%;
+  overflow: visible;
+}
+
+/* Vuetify app structure - убираем скроллы */
 .v-app {
   overflow: visible !important;
 }
 
-/* Убираем скроллбар с #app и .v-app */
+.v-main {
+  overflow: visible !important;
+}
+
+.v-main__wrap {
+  overflow: visible !important;
+}
+
+/* Скрываем все скроллбары кроме html */
+.v-app::-webkit-scrollbar,
+.v-main::-webkit-scrollbar,
+.v-main__wrap::-webkit-scrollbar,
 #app::-webkit-scrollbar,
-.v-app::-webkit-scrollbar {
+.dashboard::-webkit-scrollbar {
   display: none !important;
   width: 0 !important;
-  height: 0 !important;
 }
 
-#app,
-.v-app {
-  scrollbar-width: none !important;
-  -ms-overflow-style: none !important;
-}
-
-/* Убираем второй скролл на всех элементах */
+.v-app,
 .v-main,
 .v-main__wrap,
-.dashboard,
-.v-container {
-  overflow: visible !important;
-}
-
-html,
-body {
-  -webkit-overflow-scrolling: touch;
+#app,
+.dashboard {
+  scrollbar-width: none !important;
 }

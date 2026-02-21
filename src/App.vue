@@ -276,8 +276,20 @@ body {
   background: rgba(255, 255, 255, 0.05) !important;
   backdrop-filter: blur(20px);
   border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Скрываем скроллбар навигации */
+.nav-drawer::-webkit-scrollbar {
+  width: 0 !important;
+  background: transparent !important;
+  display: none !important;
+}
+
+.nav-drawer {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
 }
 
 /* ПК версия */
